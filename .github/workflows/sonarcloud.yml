@@ -32,12 +32,7 @@ on:
   push:
     branches: [ "main", dev, staging, feature/** ]
   pull_request:
-    branches:  [ "main", dev, staging, feature/**  ]
-  workflow_dispatch:
-
-permissions:
-  pull-requests: read # allows SonarCloud to decorate PRs with analysis results
-
+      types: [opened, synchronize, reopened]
 jobs:
   sonarcloud:
     name: SonarCloud
