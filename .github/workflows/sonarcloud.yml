@@ -34,10 +34,8 @@ on:
   pull_request:
     branches:  [ "main", dev, staging, feature/**  ]
   workflow_dispatch:
-
 permissions:
-  pull-requests: read 
-
+  pull-requests: read
 jobs:
   sonarcloud:
     name: SonarCloud
