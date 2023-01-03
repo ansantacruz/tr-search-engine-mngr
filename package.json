@@ -11,7 +11,7 @@
     "dev": "nodemon --watch src -e ts,js --exec npm start",
     "test:file": "mocha --timeout 10000 --require ts-node/register",
     "test:only": "npm run test:file -- 'test/**/*.spec.ts'",
-    "test": "npm run lint && npm run test:only",
+    "test": "npm run test:only",
     "coverage": "nyc _mocha --timeout 5000 --exit --require ts-node/register 'test/**/*.spec.ts'",
     "coverage:report": "nyc report --reporter=lcov --reporter=text",
     "coverage:web": "npm run coverage && http-server coverage/",
