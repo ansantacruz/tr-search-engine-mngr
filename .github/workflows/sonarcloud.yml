@@ -50,7 +50,7 @@ jobs:
           node-version: 16.x
       - name: Install Dependencies
         run: |
-            npm install
+            npm install --force
       - name: Run Coverage
         shell: bash
         run: |
