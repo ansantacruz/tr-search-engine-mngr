@@ -1,10 +1,10 @@
 
 export default {
     apiPath: '',
-    databaseHost: '',
-    databasePass: '',
+    databaseHost: '127.0.0.1',
+    databasePass: 'Andres123$',
     databasePort: '3306',
-    databaseUser: '',
+    databaseUser: 'root',
     databesePoolAcquiere: '30000',
     databesePoolIdle:  '10000',
     databesePoolMax:  '7',

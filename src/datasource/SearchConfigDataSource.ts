@@ -14,9 +14,13 @@ export default class SearchConfigDataSource {
         try {
             const rqUid = 'test';
             const result = await executeSQL(
-                `SELECT * from test t where r.requestId=$requestId;`,
+                `SELECT
+                    c.ciu_id as id,
+                    c.ciu_descripcion as descripcion,
+                    c.ciu_activo as estado
+                FROM turepuesto_db.ciudad c;`,
                 QueryTypes.SELECT,
-                { requestId: rqUid }
+                {}
             );
             if (result) {
                 return Promise.resolve(result[0]);

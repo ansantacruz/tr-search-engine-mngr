@@ -1,3 +1,5 @@
 export interface ISearchConfig {
-    campos:string;
+    id: number;
+    descripcion: string;
+    estado: number  ;
 }

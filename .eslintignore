@@ -5,5 +5,4 @@ dist
 src/bin
 coverage
 config
-app
 .scannerwork
