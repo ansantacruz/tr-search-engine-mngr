@@ -6,7 +6,7 @@ import SearchEngineController from './controllers/SearchEngineController';
 
 const app = express();
 const apiPath = config.apiPath;
-const fullApiPath = `${apiPath}/V1/Utilities`;
+const fullApiPath = `${apiPath}/V1/`;
 
 app.disable('x-powered-by');
 app.use(express.json());
