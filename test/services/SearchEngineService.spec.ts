@@ -13,11 +13,11 @@ chai.use(chaiHttp);
 chai.should();
 const mockExpressRequest = require('mock-express-request');
 
-const RESOLVE_RESPONSE = {
+const RESOLVE_RESPONSE = [{
    "id": 1,
    "descripcion": "Bogota",
    "estado": 1
-} as ISearchConfig;
+} ] as ISearchConfig [];
 
 const REJECT_RESPONSE = {
    "EndDt": "01/01/2023",
@@ -39,13 +39,13 @@ describe('SearchEngineService', () => {
 
    it('SearchEngineService getSearchConfig resolve', () => {
 
-      sinon.replace(SearchConfigDataSource, 'getSearchConfig', (): Promise<ISearchConfig> => {
+      sinon.replace(SearchConfigDataSource, 'getSearchConfig', (): Promise<ISearchConfig[]> => {
       return Promise.resolve(RESOLVE_RESPONSE);
       });
 
       SearchEngineService.getSearchConfig()
       .then((res) => {
-         expect(res.descripcion).equal('Bogota');
+         expect(res[0].descripcion).equal('Bogota');
       });
    });
 

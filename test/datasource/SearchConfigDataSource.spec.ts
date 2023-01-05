@@ -10,11 +10,11 @@ chai.use(chaiHttp);
 chai.should();
 
 
-const RESOLVE_RESPONSE = {
+const RESOLVE_RESPONSE = [{
     "id": 1,
     "descripcion": "Bogota",
     "estado": 1
-} as ISearchConfig;
+} ]as ISearchConfig[];
 
 describe('SearchConfigDataSource', () => {
     afterEach(() => {
@@ -23,12 +23,12 @@ describe('SearchConfigDataSource', () => {
 
     it('should get approval info ', (done) => {
         sinon.replace(database, 'executeSQL', (): Promise<any> => {
-            return Promise.resolve([RESOLVE_RESPONSE]);
+            return Promise.resolve(RESOLVE_RESPONSE);
         });
         SearchConfigDataSource.getSearchConfig()
             .then((res) => {
                 assert.isDefined(res);
-                expect(res.descripcion).equal('Bogota');
+                expect(res[0].descripcion).equal('Bogota');
                 done();
             });
     });
