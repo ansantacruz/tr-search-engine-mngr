@@ -7,7 +7,7 @@ const debug = debugLib('tc:SearchEngineService');
 
 export class SearchEngineService {
 
-    public static async getSearchConfig(): Promise<ISearchConfig> {
+    public static async getSearchConfig(): Promise<ISearchConfig[]> {
      try {
         const response =  await SearchConfigDataSource.getSearchConfig();
         return Promise.resolve(response);

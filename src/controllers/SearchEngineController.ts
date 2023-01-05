@@ -14,7 +14,6 @@ SearchEngineController.get(
     RequestLogger.basic,
     async (req: Request, res: Response) => {
         try {
-            console.log('hello')
             const response =  await SearchEngineService.getSearchConfig();
             res.status(HTTP_STATUS_CODES.OK).send(response);
         } catch (err) {
