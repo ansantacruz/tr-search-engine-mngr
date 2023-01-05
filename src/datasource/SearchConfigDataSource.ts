@@ -9,7 +9,7 @@ const debug = debugLib('tc:SearchConfigDataSource');
 export default class SearchConfigDataSource {
 
 
-    public static readonly getSearchConfig = async (): Promise<ISearchConfig> => {
+    public static readonly getSearchConfig = async (): Promise<ISearchConfig[]> => {
         debug('Starts the database query of the search configuration');
         try {
             const rqUid = 'test';
@@ -18,12 +18,12 @@ export default class SearchConfigDataSource {
                     c.ciu_id as id,
                     c.ciu_descripcion as descripcion,
                     c.ciu_activo as estado
-                FROM turepuesto_db.ciudad c;`,
+                FROM tr_data_base.ciudad c;`,
                 QueryTypes.SELECT,
                 {}
             );
             if (result) {
-                return Promise.resolve(result[0]);
+                return Promise.resolve(result);
             } else {
                 debug(`[%s] ${MessageError}`, rqUid, '404 NOMBRE BASE DE DATOS '); // Ajustar el nombre de la base de datos
                 const bodyErrorSearchConfigInfo = {
