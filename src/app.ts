@@ -2,7 +2,7 @@ import express from 'express';
 import actuator = require('express-actuator');
 import path from 'path';
 import config from './config';
-import SearchEngineController from './controllers/SearchEngineController';
+import SparePartsController from './controllers/SparePartsController';
 
 const app = express();
 const apiPath = config.apiPath;
@@ -29,6 +29,6 @@ app.use(
     })
 );
 
-app.use(fullApiPath, SearchEngineController);
+app.use(fullApiPath, SparePartsController);
 
 export default app;
