@@ -39,11 +39,11 @@ describe('SparePartsService', () => {
 
    it('SparePartsService getSearchConfig resolve', () => {
 
-      sinon.replace(SparePartsDataSource, 'getSearchConfig', (): Promise<ISearchConfig[]> => {
+      sinon.replace(SparePartsDataSource, 'getMotorcycleBrand', (): Promise<ISearchConfig[]> => {
       return Promise.resolve(RESOLVE_RESPONSE);
       });
 
-      SparePartsService.getSearchConfig()
+      SparePartsService.getMotorcycleBrand()
       .then((res) => {
          expect(res[0].descripcion).equal('Bogota');
       });
@@ -51,11 +51,11 @@ describe('SparePartsService', () => {
 
    it('SparePartsService getSearchConfig reject', () => {
 
-      sinon.replace(SparePartsDataSource, 'getSearchConfig', (): Promise<any> => {
+      sinon.replace(SparePartsDataSource, 'getMotorcycleBrand', (): Promise<any> => {
       return Promise.reject(REJECT_RESPONSE);
       });
 
-      SparePartsService.getSearchConfig()
+      SparePartsService.getMotorcycleBrand()
       .catch((err) => {
          expect(err.Status.StatusCode).equal(404);
       });

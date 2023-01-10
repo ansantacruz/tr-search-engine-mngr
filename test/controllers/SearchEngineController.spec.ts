@@ -38,14 +38,14 @@ describe('SparePartsController', () => {
     it('should resolve SparePartsController', (done) => {
         sinon.replace(
             SparePartsService,
-            'getSearchConfig',
+            'getMotorcycleBrand',
           (): Promise<any> => {
             return Promise.resolve(RESOLVE_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/search-config')
+          .get(apiPath + '/V1/get-motorcycles-brands')
           .end((err, response) => {
             expect(response.status).to.equals(200);
             done();
@@ -55,14 +55,14 @@ describe('SparePartsController', () => {
       it('should reject SparePartsController', (done) => {
         sinon.replace(
             SparePartsService,
-            'getSearchConfig',
+            'getMotorcycleBrand',
           (): Promise<any> => {
             return Promise.reject(REJECT_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/search-config')
+          .get(apiPath + '/V1/get-motorcycles-brands')
           .end((err, response) => {
             expect(response.status).to.equals(500);
             done();

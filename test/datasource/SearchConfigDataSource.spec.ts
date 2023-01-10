@@ -25,7 +25,7 @@ describe('SparePartsDataSource', () => {
         sinon.replace(database, 'executeSQL', (): Promise<any> => {
             return Promise.resolve(RESOLVE_RESPONSE);
         });
-        SparePartsDataSource.getSearchConfig()
+        SparePartsDataSource.getMotorcycleBrand()
             .then((res) => {
                 assert.isDefined(res);
                 expect(res[0].descripcion).equal('Bogota');
@@ -35,9 +35,9 @@ describe('SparePartsDataSource', () => {
 
     it('should get approval info  empty result', (done) => {
         sinon.replace(database, 'executeSQL', (): Promise<any> => {
-            return Promise.resolve(undefined);
+            return Promise.resolve([]);
         });
-        SparePartsDataSource.getSearchConfig()
+        SparePartsDataSource.getMotorcycleBrand()
             .catch((err) => {
                 assert.isDefined(err);
                 expect(err.CodeError).equal('SELECT-SEARCH_CONFIG-ENTITY-404-DB');
