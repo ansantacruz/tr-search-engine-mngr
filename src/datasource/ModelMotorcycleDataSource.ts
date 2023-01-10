@@ -4,20 +4,20 @@ import { executeSQL } from '../database/database';
 import { MessageError } from '../utilities/DebugUtilities';
 import { ISearchConfig } from '../model/ISearchConfig';
 
-const debug = debugLib('tc:SparePartsDataSource');
+const debug = debugLib('tc:ModelMotorcycleDataSource');
 
-export default class SparePartsDataSource {
+export default class ModelMotorcycleDataSource {
 
 
-    public static readonly getMotorcycleBrand = async (): Promise<ISearchConfig[]> => {
-        debug('Starts the database query of the search motorcycle brands');
+    public static readonly getModelMotorcycle = async (): Promise<ISearchConfig[]> => {
+        debug('Starts the database query of the search model motorcycle');
         try {
                        const result = await executeSQL(
                 `SELECT
-                    mmo_id as id,
-                    mmo_nombre_marca as marca,
-                    mmo_logo as logo
-                FROM tr_data_base.marca_motocicleta;`,
+                    mdmo_id as id,
+                    mdmo_segmento as segmento,
+                    mdmo_multimedia as multimedia
+                FROM tr_data_base.Modelo_motocicleta;`,
                 QueryTypes.SELECT,
                 {}
             );
@@ -26,7 +26,7 @@ export default class SparePartsDataSource {
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE'); // Ajustar el nombre de la base de datos
                 const bodyErrorSearchConfigInfo = {
-                    CodeError: 'SELECT-SEARCH-MOTORCYCLE-BRANDS-404-DB',
+                    CodeError: 'SELECT-SEARCH-MODEL-MOTORCYCLE-404-DB',
                     Reason: 'BD error NOMBRE BASE DE DATOS', // Ajustar el nombre de la base de datos
                     StatusCode: '404',
                 };
@@ -35,7 +35,7 @@ export default class SparePartsDataSource {
 
         } catch (err) {
             debug(`[%s] ${MessageError}`, err);
-            return Promise.reject({ Code: 'SELECT-SEARCH-MOTORCYCLE-BRANDS', Reason: err });
+            return Promise.reject({ Code: 'SELECT-SEARCH-MODEL-MOTORCYCLE', Reason: err });
         }
     }
 }
