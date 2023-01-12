@@ -1,6 +1,5 @@
 import debugLib from 'debug';
 import SparePartsDataSource from '../datasource/SparePartsDataSource';
-import { ISearchConfig } from '../model/ISearchConfig';
 
 const debug = debugLib('tc:SparePartsService');
 
