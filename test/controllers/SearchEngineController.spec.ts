@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import app from '../../src/app';
 import config from '../../src/config';
-import { SearchEngineService } from '../../src/services/SearchEngineService';
+import { SparePartsService } from '../../src/services/SparePartsService';
 import { ISearchConfig } from '../../src/model/ISearchConfig';
 import { IError } from '../../src/model/IError';
 
@@ -30,39 +30,39 @@ const REJECT_RESPONSE = {
     }
 } as IError;
 
-describe('SearchEngineController', () => {
+describe('SparePartsController', () => {
     afterEach(() => {
       sinon.restore();
     });
 
-    it('should resolve SearchEngineController', (done) => {
+    it('should resolve SparePartsController', (done) => {
         sinon.replace(
-            SearchEngineService,
-            'getSearchConfig',
+            SparePartsService,
+            'getMotorcycleBrand',
           (): Promise<any> => {
             return Promise.resolve(RESOLVE_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/search-config')
+          .get(apiPath + '/V1/get-motorcycles-brands')
           .end((err, response) => {
             expect(response.status).to.equals(200);
             done();
           });
       });
 
-      it('should reject SearchEngineController', (done) => {
+      it('should reject SparePartsController', (done) => {
         sinon.replace(
-            SearchEngineService,
-            'getSearchConfig',
+            SparePartsService,
+            'getMotorcycleBrand',
           (): Promise<any> => {
             return Promise.reject(REJECT_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/search-config')
+          .get(apiPath + '/V1/get-motorcycles-brands')
           .end((err, response) => {
             expect(response.status).to.equals(500);
             done();

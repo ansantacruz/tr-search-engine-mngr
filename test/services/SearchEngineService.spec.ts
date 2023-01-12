@@ -2,9 +2,9 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import config from '../../src/config';
-import { SearchEngineService } from '../../src/services/SearchEngineService';
+import { SparePartsService } from '../../src/services/SparePartsService';
 import { ISearchConfig } from '../../src/model/ISearchConfig';
-import SearchConfigDataSource from '../../src/datasource/SearchConfigDataSource';
+import SparePartsDataSource from '../../src/datasource/SparePartsDataSource';
 import { IError } from '../../src/model/IError';
 
 
@@ -30,32 +30,32 @@ const REJECT_RESPONSE = {
    }
 } as IError;
 
-describe('SearchEngineService', () => {
+describe('SparePartsService', () => {
 
 
    afterEach(() => {
       sinon.restore();
    });
 
-   it('SearchEngineService getSearchConfig resolve', () => {
+   it('SparePartsService getSearchConfig resolve', () => {
 
-      sinon.replace(SearchConfigDataSource, 'getSearchConfig', (): Promise<ISearchConfig[]> => {
+      sinon.replace(SparePartsDataSource, 'getMotorcycleBrand', (): Promise<ISearchConfig[]> => {
       return Promise.resolve(RESOLVE_RESPONSE);
       });
 
-      SearchEngineService.getSearchConfig()
+      SparePartsService.getMotorcycleBrand()
       .then((res) => {
          expect(res[0].descripcion).equal('Bogota');
       });
    });
 
-   it('SearchEngineService getSearchConfig reject', () => {
+   it('SparePartsService getSearchConfig reject', () => {
 
-      sinon.replace(SearchConfigDataSource, 'getSearchConfig', (): Promise<any> => {
+      sinon.replace(SparePartsDataSource, 'getMotorcycleBrand', (): Promise<any> => {
       return Promise.reject(REJECT_RESPONSE);
       });
 
-      SearchEngineService.getSearchConfig()
+      SparePartsService.getMotorcycleBrand()
       .catch((err) => {
          expect(err.Status.StatusCode).equal(404);
       });

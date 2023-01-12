@@ -4,30 +4,29 @@ import { executeSQL } from '../database/database';
 import { MessageError } from '../utilities/DebugUtilities';
 import { ISearchConfig } from '../model/ISearchConfig';
 
-const debug = debugLib('tc:SearchConfigDataSource');
+const debug = debugLib('tc:SparePartsDataSource');
 
-export default class SearchConfigDataSource {
+export default class SparePartsDataSource {
 
 
-    public static readonly getSearchConfig = async (): Promise<ISearchConfig[]> => {
-        debug('Starts the database query of the search configuration');
+    public static readonly getMotorcycleBrand = async (): Promise<ISearchConfig[]> => {
+        debug('Starts the database query of the search motorcycle brands');
         try {
-            const rqUid = 'test';
-            const result = await executeSQL(
+                       const result = await executeSQL(
                 `SELECT
-                    c.ciu_id as id,
-                    c.ciu_descripcion as descripcion,
-                    c.ciu_activo as estado
-                FROM tr_data_base.ciudad c;`,
+                    mmo_id as id,
+                    mmo_nombre_marca as marca,
+                    mmo_logo as logo
+                FROM tr_data_base.marca_motocicleta;`,
                 QueryTypes.SELECT,
                 {}
             );
             if (result) {
                 return Promise.resolve(result);
             } else {
-                debug(`[%s] ${MessageError}`, rqUid, '404 NOMBRE BASE DE DATOS '); // Ajustar el nombre de la base de datos
+                debug(`${MessageError}`, '404 TR_DATA_BASE'); // Ajustar el nombre de la base de datos
                 const bodyErrorSearchConfigInfo = {
-                    CodeError: 'SELECT-SEARCH_CONFIG-ENTITY-404-DB',
+                    CodeError: 'SELECT-SEARCH-MOTORCYCLE-BRANDS-404-DB',
                     Reason: 'BD error NOMBRE BASE DE DATOS', // Ajustar el nombre de la base de datos
                     StatusCode: '404',
                 };
@@ -36,7 +35,7 @@ export default class SearchConfigDataSource {
 
         } catch (err) {
             debug(`[%s] ${MessageError}`, err);
-            return Promise.reject({ Code: 'SELECT-SEARCH_CONFIG-ENTITY', Reason: err });
+            return Promise.reject({ Code: 'SELECT-SEARCH-MOTORCYCLE-BRANDS', Reason: err });
         }
     }
 }

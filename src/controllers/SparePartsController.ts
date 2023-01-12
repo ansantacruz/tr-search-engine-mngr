@@ -3,19 +3,19 @@ import { Request, Response, Router } from 'express';
 import RequestLogger from '../utilities/RequestLogger';
 import HTTP_STATUS_CODES from 'http-status';
 import { DebugUtilities } from '../utilities/DebugUtilities';
-import { SearchEngineService } from '../services/SearchEngineService';
+import { SparePartsService } from '../services/SparePartsService';
 
-const debug = debugLib('tc:SearchEngineController');
-const SearchEngineController = Router();
+const debug = debugLib('tc:SparePartsController');
+const SparePartsController = Router();
 
 
-SearchEngineController.get(
-    '/search-config',
+SparePartsController.get(
+    '/get-motorcycles-brands',
     RequestLogger.basic,
     async (req: Request, res: Response) => {
         try {
             console.log('hello')
-            const response =  await SearchEngineService.getSearchConfig();
+            const response =  await SparePartsService.getMotorcycleBrand();
             res.status(HTTP_STATUS_CODES.OK).send(response);
         } catch (err) {
             const error = DebugUtilities.error(err, 'Error');
@@ -25,4 +25,4 @@ SearchEngineController.get(
     }
 );
 
-export default SearchEngineController;
+export default SparePartsController;

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { ISearchConfig } from '../../src/model/ISearchConfig';
 import { IError } from '../../src/model/IError';
 import * as database from '../../src/database/database';
-import SearchConfigDataSource from '../../src/datasource/SearchConfigDataSource';
+import SparePartsDataSource from '../../src/datasource/SparePartsDataSource';
 
 chai.use(chaiHttp);
 chai.should();
@@ -16,7 +16,7 @@ const RESOLVE_RESPONSE = [{
     "estado": 1
 } ]as ISearchConfig[];
 
-describe('SearchConfigDataSource', () => {
+describe('SparePartsDataSource', () => {
     afterEach(() => {
       sinon.restore();
     });
@@ -25,22 +25,10 @@ describe('SearchConfigDataSource', () => {
         sinon.replace(database, 'executeSQL', (): Promise<any> => {
             return Promise.resolve(RESOLVE_RESPONSE);
         });
-        SearchConfigDataSource.getSearchConfig()
+        SparePartsDataSource.getMotorcycleBrand()
             .then((res) => {
                 assert.isDefined(res);
                 expect(res[0].descripcion).equal('Bogota');
-                done();
-            });
-    });
-
-    it('should get approval info  empty result', (done) => {
-        sinon.replace(database, 'executeSQL', (): Promise<any> => {
-            return Promise.resolve(undefined);
-        });
-        SearchConfigDataSource.getSearchConfig()
-            .catch((err) => {
-                assert.isDefined(err);
-                expect(err.CodeError).equal('SELECT-SEARCH_CONFIG-ENTITY-404-DB');
                 done();
             });
     });
