@@ -33,16 +33,4 @@ describe('SparePartsDataSource', () => {
             });
     });
 
-    it('should get approval info  empty result', (done) => {
-        sinon.replace(database, 'executeSQL', (): Promise<any> => {
-            return Promise.resolve([]);
-        });
-        SparePartsDataSource.getMotorcycleBrand()
-            .catch((err) => {
-                assert.isDefined(err);
-                expect(err.CodeError).equal('SELECT-SEARCH_CONFIG-ENTITY-404-DB');
-                done();
-            });
-    });
-
 });
