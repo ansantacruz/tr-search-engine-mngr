@@ -11,7 +11,7 @@ export class SparePartsService {
         const response =  await SparePartsDataSource.getMotorcycleBrand();
         return Promise.resolve(response);
      } catch (err) {
-        debug('Error trying to obtain the search configuration %s ', err);
+        debug('Error trying to obtain motorcycle brands %s ', err);
         return Promise.reject(err);
      }
     }

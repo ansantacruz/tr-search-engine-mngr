@@ -2,7 +2,8 @@ import express from 'express';
 import actuator = require('express-actuator');
 import path from 'path';
 import config from './config';
-import SparePartsController from './controllers/SparePartsController';
+import SparePartsController from './controllers/MotorcycleAccessoriesController';
+import MotorcycleAccessoriesController from './controllers/MotorcycleAccessoriesController';
 
 const app = express();
 const apiPath = config.apiPath;
@@ -29,6 +30,6 @@ app.use(
     })
 );
 
-app.use(fullApiPath, SparePartsController);
+app.use(fullApiPath, SparePartsController, MotorcycleAccessoriesController);
 
 export default app;

@@ -10,16 +10,15 @@ const SparePartsController = Router();
 
 
 SparePartsController.get(
-    '/get-motorcycles-brands',
+    '/motorcycles/get-motorcycles-brands',
     RequestLogger.basic,
     async (req: Request, res: Response) => {
         try {
-            console.log('hello')
             const response =  await SparePartsService.getMotorcycleBrand();
             res.status(HTTP_STATUS_CODES.OK).send(response);
         } catch (err) {
             const error = DebugUtilities.error(err, 'Error');
-            debug('ERROR: POST-CoeController: %j', error.statusError);
+            debug('ERROR: POST-SparePartsController: %j', error.statusError);
             res.status(error.codeStatusError).send(error.statusError);
         }
     }
