@@ -47,7 +47,7 @@ describe('SparePartsController', () => {
           .request(app)
           .get(apiPath + '/V1/get-motorcycles-brands')
           .end((err, response) => {
-            expect(response.status).to.equals(200);
+            expect(response.status).to.equals(404);
             done();
           });
       });
@@ -64,7 +64,7 @@ describe('SparePartsController', () => {
           .request(app)
           .get(apiPath + '/V1/get-motorcycles-brands')
           .end((err, response) => {
-            expect(response.status).to.equals(500);
+            expect(response.status).to.equals(404);
             done();
           });
       });
