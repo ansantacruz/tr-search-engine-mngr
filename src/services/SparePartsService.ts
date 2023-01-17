@@ -15,4 +15,14 @@ export class SparePartsService {
         return Promise.reject(err);
      }
     }
+
+    public static async getMotorcyclebyBrand(brand:number): Promise<any> {
+      try {
+         const response =  await SparePartsDataSource.getMotorcyclebyBrand(brand);
+         return Promise.resolve(response);
+      } catch (err) {
+         debug('Error trying to obtain motorcycle brands %s ', err);
+         return Promise.reject(err);
+      }
+     }
 }

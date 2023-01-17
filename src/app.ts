@@ -2,7 +2,7 @@ import express from 'express';
 import actuator = require('express-actuator');
 import path from 'path';
 import config from './config';
-import SparePartsController from './controllers/MotorcycleAccessoriesController';
+import SparePartsController from './controllers/SparePartsController';
 import MotorcycleAccessoriesController from './controllers/MotorcycleAccessoriesController';
 
 const app = express();
