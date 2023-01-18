@@ -27,12 +27,12 @@ export default class MotorcycleAccessoriesDataSource {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');
-                const bodyErrorSearchConfigInfo = {
+                const bodyGetTypeOfAccesoriesError = {
                     CodeError: 'SELECT-SEARCH-TYPE-OF-ACCESORIES-404-DB',
                     Reason: 'BD error TR_DATA_BASE',
                     StatusCode: '404',
                 };
-                return Promise.reject(bodyErrorSearchConfigInfo);
+                return Promise.reject(bodyGetTypeOfAccesoriesError);
             }
 
         } catch (err) {
@@ -61,12 +61,12 @@ export default class MotorcycleAccessoriesDataSource {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');
-                const bodyErrorSearchConfigInfo = {
+                const bodyBrandsOfSparePartsByTypeError = {
                     CodeError: 'SELECT-ACCESORY-BRANDS-404-DB',
                     Reason: 'BD error TR_DATA_BASE',
                     StatusCode: '404',
                 };
-                return Promise.reject(bodyErrorSearchConfigInfo);
+                return Promise.reject(bodyBrandsOfSparePartsByTypeError);
             }
 
         } catch (err) {

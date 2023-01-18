@@ -12,22 +12,22 @@ export default class SparePartsDataSource {
     public static readonly getMotorcycleBrand = async (): Promise<ISearchConfig[]> => {
         debug('Starts the database query of the search motorcycle brands');
         try {
-                       const result = await executeSQL(
+                const result = await executeSQL(
                 `SELECT
-                mmo_id as id,
-                mmo_descripcion as marca,
-                mmo_logo as logo
-            FROM tr_data_base.marca_motocicleta;`,
+                    mmo_id as id,
+                    mmo_descripcion as marca,
+                    mmo_logo as logo
+                FROM tr_data_base.marca_motocicleta;`,
                 QueryTypes.SELECT,
                 {}
             );
             if (result) {
                 return Promise.resolve(result);
             } else {
-                debug(`${MessageError}`, '404 TR_DATA_BASE'); // Ajustar el nombre de la base de datos
+                debug(`${MessageError}`, '404 TR_DATA_BASE');
                 const bodyErrorSearchConfigInfo = {
                     CodeError: 'SELECT-SEARCH-MOTORCYCLE-BRANDS-404-DB',
-                    Reason: 'BD error NOMBRE BASE DE DATOS', // Ajustar el nombre de la base de datos
+                    Reason: 'BD error TR_DATA_BASE',
                     StatusCode: '404',
                 };
                 return Promise.reject(bodyErrorSearchConfigInfo);
@@ -40,11 +40,11 @@ export default class SparePartsDataSource {
     }
 
     public static readonly getMotorcyclebyBrand = async (brand: number): Promise<any> => {
-        debug('Starts the database query of the search motorcycle brands');
+        debug('Starts the database query of the search motorcycle by  brand');
         try {
             const result = await executeSQL(
-                `SELECT 
-                    mo.mot_id,            
+                `SELECT
+                    mo.mot_id,
                     mo.mot_nombre,
                     tpm.tmo_descripcion
                 FROM tr_data_base.motocicleta mo
@@ -57,10 +57,10 @@ export default class SparePartsDataSource {
             if (result) {
                 return Promise.resolve(result);
             } else {
-                debug(`${MessageError}`, '404 TR_DATA_BASE'); // Ajustar el nombre de la base de datos
+                debug(`${MessageError}`, '404 TR_DATA_BASE');
                 const bodyErrorSearchConfigInfo = {
-                    CodeError: 'SELECT-SEARCH-MOTORCYCLE-BRANDS-404-DB',
-                    Reason: 'BD error NOMBRE BASE DE DATOS', // Ajustar el nombre de la base de datos
+                    CodeError: 'SELECT-SEARCH-MOTORCYCLE-BY_BRAND-404-DB',
+                    Reason: 'BD error TR_DATA_BASE',
                     StatusCode: '404',
                 };
                 return Promise.reject(bodyErrorSearchConfigInfo);
@@ -68,7 +68,7 @@ export default class SparePartsDataSource {
 
         } catch (err) {
             debug(`[%s] ${MessageError}`, err);
-            return Promise.reject({ Code: 'SELECT-SEARCH-MOTORCYCLE-BRANDS', Reason: err });
+            return Promise.reject({ Code: 'SELECT-SEARCH-MOTORCYCLE-BY_BRAND', Reason: err });
         }
     }
 }
