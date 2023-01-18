@@ -2,7 +2,6 @@ import debugLib from 'debug';
 import { QueryTypes } from 'sequelize';
 import { executeSQL } from '../database/database';
 import { MessageError } from '../utilities/DebugUtilities';
-import { ISearchConfig } from '../model/ISearchConfig';
 import { ITypeOfAccesories } from '../model/ITypeOfAccesories';
 import { IAccesoryBrand } from '../model/IAccesoryBrand';
 

@@ -1,5 +1,4 @@
 import debugLib from 'debug';
-import SparePartsDataSource from '../datasource/SparePartsDataSource';
 import MotorcycleAccessoriesDataSource from '../datasource/MotorcycleAccessoriesDataSource';
 import { ITypeOfAccesories } from '../model/ITypeOfAccesories';
 import { IAccesoryBrand } from '../model/IAccesoryBrand';

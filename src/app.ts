@@ -4,6 +4,7 @@ import path from 'path';
 import config from './config';
 import SparePartsController from './controllers/SparePartsController';
 import MotorcycleAccessoriesController from './controllers/MotorcycleAccessoriesController';
+import ProductsController from './controllers/ProductsController';
 
 const app = express();
 const apiPath = config.apiPath;
@@ -30,6 +31,6 @@ app.use(
     })
 );
 
-app.use(fullApiPath, SparePartsController, MotorcycleAccessoriesController);
+app.use(fullApiPath, SparePartsController, MotorcycleAccessoriesController, ProductsController);
 
 export default app;
