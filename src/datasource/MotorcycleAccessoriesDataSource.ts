@@ -1,9 +1,9 @@
 import debugLib from 'debug';
 import { QueryTypes } from 'sequelize';
 import { executeSQL } from '../database/database';
-import { MessageError } from '../utilities/DebugUtilities';
-import { ITypeOfAccesories } from '../model/ITypeOfAccesories';
 import { IAccesoryBrand } from '../model/IAccesoryBrand';
+import { ITypeOfAccesories } from '../model/ITypeOfAccesories';
+import { MessageError } from '../utilities/DebugUtilities';
 
 const debug = debugLib('tc:MotorcycleAccessoriesDataSource');
 
@@ -23,7 +23,7 @@ export default class MotorcycleAccessoriesDataSource {
                 QueryTypes.SELECT,
                 {}
             );
-            if (result) {
+            if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');
@@ -57,7 +57,7 @@ export default class MotorcycleAccessoriesDataSource {
                 QueryTypes.SELECT,
                 { accesory }
             );
-            if (result) {
+            if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');

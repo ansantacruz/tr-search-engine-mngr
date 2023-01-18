@@ -1,9 +1,9 @@
 import debugLib from 'debug';
 import { Request, Response, Router } from 'express';
-import RequestLogger from '../utilities/RequestLogger';
 import HTTP_STATUS_CODES from 'http-status';
-import { DebugUtilities } from '../utilities/DebugUtilities';
 import { ProductsService } from '../services/ProductsService';
+import { DebugUtilities } from '../utilities/DebugUtilities';
+import RequestLogger from '../utilities/RequestLogger';
 
 const debug = debugLib('tc:ProductsController');
 const ProductsController = Router();

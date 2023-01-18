@@ -1,8 +1,8 @@
 import debugLib from 'debug';
 import { QueryTypes } from 'sequelize';
 import { executeSQL } from '../database/database';
-import { MessageError } from '../utilities/DebugUtilities';
 import { ISearchConfig } from '../model/ISearchConfig';
+import { MessageError } from '../utilities/DebugUtilities';
 
 const debug = debugLib('tc:SparePartsDataSource');
 
@@ -21,7 +21,7 @@ export default class SparePartsDataSource {
                 QueryTypes.SELECT,
                 {}
             );
-            if (result) {
+            if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');
@@ -54,7 +54,7 @@ export default class SparePartsDataSource {
                 QueryTypes.SELECT,
                 {brand}
             );
-            if (result) {
+            if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');

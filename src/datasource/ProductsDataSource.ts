@@ -1,9 +1,9 @@
 import debugLib from 'debug';
 import { QueryTypes } from 'sequelize';
 import { executeSQL } from '../database/database';
-import { MessageError } from '../utilities/DebugUtilities';
-import { IProducType } from '../model/IProductType';
 import { ICategory } from '../model/ICategory';
+import { IProducType } from '../model/IProductType';
+import { MessageError } from '../utilities/DebugUtilities';
 
 const debug = debugLib('tc:ProductsDataSource');
 
@@ -23,7 +23,7 @@ export default class ProductsDataSource {
                 QueryTypes.SELECT,
                 {}
                 );
-            if (result) {
+            if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');
@@ -56,7 +56,7 @@ export default class ProductsDataSource {
                 QueryTypes.SELECT,
                 {producType}
                 );
-            if (result) {
+            if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');

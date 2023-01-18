@@ -1,7 +1,7 @@
 import debugLib from 'debug';
 import ProductsDataSource from '../datasource/ProductsDataSource';
-import { IProducType } from '../model/IProductType';
 import { ICategory } from '../model/ICategory';
+import { IProducType } from '../model/IProductType';
 
 const debug = debugLib('tc:ProductsService');
 

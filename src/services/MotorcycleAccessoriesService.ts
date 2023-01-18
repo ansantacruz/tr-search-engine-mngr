@@ -1,7 +1,7 @@
 import debugLib from 'debug';
 import MotorcycleAccessoriesDataSource from '../datasource/MotorcycleAccessoriesDataSource';
-import { ITypeOfAccesories } from '../model/ITypeOfAccesories';
 import { IAccesoryBrand } from '../model/IAccesoryBrand';
+import { ITypeOfAccesories } from '../model/ITypeOfAccesories';
 
 const debug = debugLib('tc:MotorcycleAccessoriesService');
 
