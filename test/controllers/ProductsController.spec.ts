@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import app from '../../src/app';
 import config from '../../src/config';
-import { SparePartsService } from '../../src/services/SparePartsService';
+import { ProductsService } from '../../src/services/ProductsService';
 import { ISearchConfig } from '../../src/model/ISearchConfig';
 import { IError } from '../../src/model/IError';
 
@@ -30,39 +30,39 @@ const REJECT_RESPONSE = {
     }
 } as IError;
 
-describe('SparePartsController', () => {
+describe('ProductsController', () => {
     afterEach(() => {
       sinon.restore();
     });
 
-    it('should resolve SparePartsController', (done) => {
+    it('should resolve ProductsController', (done) => {
         sinon.replace(
-            SparePartsService,
-            'getMotorcycleBrand',
+            ProductsService,
+            'getProductsTypes',
           (): Promise<any> => {
             return Promise.resolve(RESOLVE_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/motorcycles/get-motorcycles-brands')
+          .get(apiPath + '/V1/products/get-types')
           .end((err, response) => {
             expect(response.status).to.equals(200);
             done();
           });
       });
 
-      it('should reject SparePartsController', (done) => {
+      it('should reject ProductsController', (done) => {
         sinon.replace(
-            SparePartsService,
-            'getMotorcycleBrand',
+            ProductsService,
+            'getProductsTypes',
           (): Promise<any> => {
             return Promise.reject(REJECT_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/motorcycles/get-motorcycles-brands')
+          .get(apiPath + '/V1/products/get-types')
           .end((err, response) => {
             expect(response.status).to.equals(500);
             done();
@@ -70,34 +70,34 @@ describe('SparePartsController', () => {
       });
 
 
-      it('should resolve SparePartsController', (done) => {
+      it('should resolve ProductsController', (done) => {
         sinon.replace(
-            SparePartsService,
-            'getMotorcyclebyBrand',
+            ProductsService,
+            'getCategoryByProductTypes',
           (): Promise<any> => {
             return Promise.resolve(RESOLVE_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/motorcycles/get-motorcycles-by-brand/1')
+          .get(apiPath + '/V1/products/get-category-by-produc-type/1')
           .end((err, response) => {
             expect(response.status).to.equals(200);
             done();
           });
       });
 
-      it('should reject SparePartsController', (done) => {
+      it('should reject ProductsController', (done) => {
         sinon.replace(
-            SparePartsService,
-            'getMotorcyclebyBrand',
+            ProductsService,
+            'getCategoryByProductTypes',
           (): Promise<any> => {
             return Promise.reject(REJECT_RESPONSE);
           }
         );
         chai
           .request(app)
-          .get(apiPath + '/V1/motorcycles/get-motorcycles-by-brand/1')
+          .get(apiPath + '/V1/products/get-category-by-produc-type/1')
           .end((err, response) => {
             expect(response.status).to.equals(500);
             done();

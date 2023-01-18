@@ -1,11 +1,10 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
-import config from '../../src/config';
-import { SparePartsService } from '../../src/services/SparePartsService';
-import { ISearchConfig } from '../../src/model/ISearchConfig';
 import SparePartsDataSource from '../../src/datasource/SparePartsDataSource';
 import { IError } from '../../src/model/IError';
+import { ISearchConfig } from '../../src/model/ISearchConfig';
+import { SparePartsService } from '../../src/services/SparePartsService';
 
 
 
@@ -56,6 +55,30 @@ describe('SparePartsService', () => {
       });
 
       SparePartsService.getMotorcycleBrand()
+      .catch((err) => {
+         expect(err.Status.StatusCode).equal(404);
+      });
+   });
+
+   it('SparePartsService getSearchConfig resolve', () => {
+
+      sinon.replace(SparePartsDataSource, 'getMotorcyclebyBrand', (): Promise<ISearchConfig[]> => {
+      return Promise.resolve(RESOLVE_RESPONSE);
+      });
+
+      SparePartsService.getMotorcyclebyBrand(1)
+      .then((res) => {
+         expect(res[0].descripcion).equal('Bogota');
+      });
+   });
+
+   it('SparePartsService getSearchConfig reject', () => {
+
+      sinon.replace(SparePartsDataSource, 'getMotorcyclebyBrand', (): Promise<any> => {
+      return Promise.reject(REJECT_RESPONSE);
+      });
+
+      SparePartsService.getMotorcyclebyBrand(1)
       .catch((err) => {
          expect(err.Status.StatusCode).equal(404);
       });
