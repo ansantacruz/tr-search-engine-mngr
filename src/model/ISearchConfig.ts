@@ -1,5 +1,6 @@
 export interface ISearchConfig {
     id: number;
-    descripcion: string;
+    marca: string;
     estado: number  ;
+    logo: string;
 }

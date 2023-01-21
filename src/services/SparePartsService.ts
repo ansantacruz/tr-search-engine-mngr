@@ -1,5 +1,6 @@
 import debugLib from 'debug';
 import SparePartsDataSource from '../datasource/SparePartsDataSource';
+import { IMotorcycle } from '../model/IMotorcycle';
 
 const debug = debugLib('tc:SparePartsService');
 
@@ -16,7 +17,7 @@ export class SparePartsService {
      }
     }
 
-    public static async getMotorcyclebyBrand(brand:number): Promise<any> {
+    public static async getMotorcyclebyBrand(brand:number): Promise<IMotorcycle[]> {
       try {
          const response =  await SparePartsDataSource.getMotorcyclebyBrand(brand);
          return Promise.resolve(response);
