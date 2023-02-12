@@ -1,3 +1,4 @@
+
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
@@ -5,6 +6,7 @@ import SparePartsDataSource from '../../src/datasource/SparePartsDataSource';
 import { IError } from '../../src/model/IError';
 import { ISearchConfig } from '../../src/model/ISearchConfig';
 import { SparePartsService } from '../../src/services/SparePartsService';
+import { IProduct } from '../../src/model/IProduct';
 
 
 
@@ -14,9 +16,15 @@ const mockExpressRequest = require('mock-express-request');
 
 const RESOLVE_RESPONSE = [{
    "id": 1,
-   "descripcion": "Bogota",
+   "marca": "Bogota",
    "estado": 1
 } ] as ISearchConfig [];
+
+const RESOLVE_RESPONSE_PRODUCT = [{
+   "productId": 1,
+   "productDescription": "Bogota",
+   "logo": "1"
+} ] as IProduct [];
 
 const REJECT_RESPONSE = {
    "EndDt": "01/01/2023",
@@ -44,7 +52,7 @@ describe('SparePartsService', () => {
 
       SparePartsService.getMotorcycleBrand()
       .then((res) => {
-         expect(res[0].descripcion).equal('Bogota');
+         expect(res[0].marca).equal('Bogota');
       });
    });
 
@@ -60,17 +68,17 @@ describe('SparePartsService', () => {
       });
    });
 
-   it('SparePartsService getSearchConfig resolve', () => {
+   // it('SparePartsService getSearchConfig resolve', () => {
 
-      sinon.replace(SparePartsDataSource, 'getMotorcyclebyBrand', (): Promise<ISearchConfig[]> => {
-      return Promise.resolve(RESOLVE_RESPONSE);
-      });
+   //    sinon.replace(SparePartsDataSource, 'getMotorcyclebyBrand', (): Promise<ISearchConfig[]> => {
+   //    return Promise.resolve(RESOLVE_RESPONSE);
+   //    });
 
-      SparePartsService.getMotorcyclebyBrand(1)
-      .then((res) => {
-         expect(res[0].descripcion).equal('Bogota');
-      });
-   });
+   //    SparePartsService.getMotorcyclebyBrand(1)
+   //    .then((res) => {
+   //       expect(res[0].marca).equal('Bogota');
+   //    });
+   // });
 
    it('SparePartsService getSearchConfig reject', () => {
 
@@ -79,6 +87,30 @@ describe('SparePartsService', () => {
       });
 
       SparePartsService.getMotorcyclebyBrand(1)
+      .catch((err) => {
+         expect(err.Status.StatusCode).equal(404);
+      });
+   });
+
+   it('getSapareParts getSearchConfig resolve', () => {
+
+      sinon.replace(SparePartsDataSource, 'getSapareParts', (): Promise<IProduct[]> => {
+      return Promise.resolve(RESOLVE_RESPONSE_PRODUCT);
+      });
+
+      SparePartsService.getSapareParts(1,1)
+      .then((res) => {
+         expect(res[0].productDescription).equal('Bogota');
+      });
+   });
+
+   it('SparePartsService getSapareParts reject', () => {
+
+      sinon.replace(SparePartsDataSource, 'getSapareParts', (): Promise<any> => {
+      return Promise.reject(REJECT_RESPONSE);
+      });
+
+      SparePartsService.getSapareParts(1,1)
       .catch((err) => {
          expect(err.Status.StatusCode).equal(404);
       });

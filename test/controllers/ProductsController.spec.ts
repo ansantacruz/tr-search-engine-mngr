@@ -15,7 +15,7 @@ const expect = chai.expect;
 
 const RESOLVE_RESPONSE = {
     "id": 1,
-    "descripcion": "Bogota",
+    "marca": "Bogota",
     "estado": 1
 } as ISearchConfig;
 

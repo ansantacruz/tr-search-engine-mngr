@@ -18,7 +18,7 @@ ProductsController.get(
             res.status(HTTP_STATUS_CODES.OK).send(response);
         } catch (err) {
             const error = DebugUtilities.error(err, 'Error');
-            debug('ERROR: POST-ProductsController: %j', error.statusError);
+            debug('ERROR: POST-ProductsController /products/get-types: %j', error.statusError);
             res.status(error.codeStatusError).send(error.statusError);
         }
     }
@@ -34,10 +34,13 @@ ProductsController.get(
             res.status(HTTP_STATUS_CODES.OK).send(response);
         } catch (err) {
             const error = DebugUtilities.error(err, 'Error');
-            debug('ERROR: POST-ProductsController: %j', error.statusError);
+            debug('ERROR: POST-ProductsController get-category-by-produc-type/:producType: %j', error.statusError);
             res.status(error.codeStatusError).send(error.statusError);
         }
     }
 );
+
+
+
 
 export default ProductsController;

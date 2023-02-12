@@ -3,8 +3,6 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import app from '../../src/app';
 import config from '../../src/config';
-import { SparePartsService } from '../../src/services/SparePartsService';
-import { ISearchConfig } from '../../src/model/ISearchConfig';
 import { IError } from '../../src/model/IError';
 import { MotorcycleAccessoriesService } from '../../src/services/MotorcycleAccessoriesService';
 
@@ -14,11 +12,11 @@ chai.should();
 const apiPath = config.apiPath;
 const expect = chai.expect;
 
-const RESOLVE_RESPONSE = {
-    "id": 1,
-    "descripcion": "Bogota",
-    "estado": 1
-} as ISearchConfig;
+const RESOLVE_RESPONSE_BRANDS = [
+  {
+    "brand": "ICON"
+  }
+];
 
 const REJECT_RESPONSE = {
     "EndDt": "01/01/2023",
@@ -36,72 +34,73 @@ describe('MotorcycleAccessoriesController', () => {
       sinon.restore();
     });
 
-    it('should resolve MotorcycleAccessoriesController', (done) => {
-        sinon.replace(
-          MotorcycleAccessoriesService,
-            'getTypeOfAccesories',
-          (): Promise<any> => {
-            return Promise.resolve(RESOLVE_RESPONSE);
-          }
-        );
-        chai
-          .request(app)
-          .get(apiPath + '/V1/accessories/get-types-of-accessories')
-          .end((err, response) => {
-            expect(response.status).to.equals(200);
-            done();
-          });
-      });
+    it('should resolve et-brands-of-category', (done) => {
+      sinon.replace(
+        MotorcycleAccessoriesService,
+          'getBrandsByCategory',
+        (): Promise<any> => {
+          return Promise.resolve(RESOLVE_RESPONSE_BRANDS);
+        }
+      );
+      chai
+        .request(app)
+        .get(apiPath + '/V1/accessories/get-brands-of-category/1')
+        .end((err, response) => {
+          expect(response.status).to.equals(200);
+          done();
+        });
+    });
 
-      it('should reject MotorcycleAccessoriesController', (done) => {
-        sinon.replace(
-          MotorcycleAccessoriesService,
-            'getTypeOfAccesories',
-          (): Promise<any> => {
-            return Promise.reject(REJECT_RESPONSE);
-          }
-        );
-        chai
-          .request(app)
-          .get(apiPath + '/V1/accessories/get-types-of-accessories')
-          .end((err, response) => {
-            expect(response.status).to.equals(500);
-            done();
-          });
-      });
+    it('should reject et-brands-of-category', (done) => {
+      sinon.replace(
+        MotorcycleAccessoriesService,
+          'getBrandsByCategory',
+        (): Promise<any> => {
+          return Promise.reject({status:500});
+        }
+      );
+      chai
+        .request(app)
+        .get(apiPath + '/V1/accessories/get-brands-of-category/1')
+        .end((err, response) => {
+          expect(response.status).to.equals(500);
+          done();
+        });
+    });
 
-      it('should resolve MotorcycleAccessoriesController', (done) => {
-        sinon.replace(
-          MotorcycleAccessoriesService,
-            'getBrandsOfSparePartsByType',
-          (): Promise<any> => {
-            return Promise.resolve(RESOLVE_RESPONSE);
-          }
-        );
-        chai
-          .request(app)
-          .get(apiPath + '/V1/accessories/get-accesories-brands-by-type/1')
-          .end((err, response) => {
-            expect(response.status).to.equals(200);
-            done();
-          });
-      });
 
-      it('should reject MotorcycleAccessoriesController', (done) => {
-        sinon.replace(
-          MotorcycleAccessoriesService,
-            'getBrandsOfSparePartsByType',
-          (): Promise<any> => {
-            return Promise.reject(REJECT_RESPONSE);
-          }
-        );
-        chai
-          .request(app)
-          .get(apiPath + '/V1/accessories/get-accesories-brands-by-type/1')
-          .end((err, response) => {
-            expect(response.status).to.equals(500);
-            done();
-          });
-      });
+    it('should resolve get-propducts-by-brand', (done) => {
+      sinon.replace(
+        MotorcycleAccessoriesService,
+          'getProductsByBrand',
+        (): Promise<any> => {
+          return Promise.resolve(RESOLVE_RESPONSE_BRANDS);
+        }
+      );
+      chai
+        .request(app)
+        .get(apiPath + '/V1/accessories/get-propducts-by-brand/1/1')
+        .end((err, response) => {
+          expect(response.status).to.equals(200);
+          done();
+        });
+    });
+
+    it('should reject get-propducts-by-brand', (done) => {
+      sinon.replace(
+        MotorcycleAccessoriesService,
+          'getProductsByBrand',
+        (): Promise<any> => {
+          return Promise.reject({status:500});
+        }
+      );
+      chai
+        .request(app)
+        .get(apiPath + '/V1/accessories/get-propducts-by-brand/1/1')
+        .end((err, response) => {
+          expect(response.status).to.equals(500);
+          done();
+        });
+    });
 
 });
