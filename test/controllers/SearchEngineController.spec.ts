@@ -14,9 +14,9 @@ const apiPath = config.apiPath;
 const expect = chai.expect;
 
 const RESOLVE_RESPONSE = {
-    "id": 1,
-    "descripcion": "Bogota",
-    "estado": 1
+  "id": 1,
+  "marca": "Bogota",
+  "estado": 1
 } as ISearchConfig;
 
 const REJECT_RESPONSE = {
@@ -98,6 +98,40 @@ describe('SparePartsController', () => {
         chai
           .request(app)
           .get(apiPath + '/V1/motorcycles/get-motorcycles-by-brand/1')
+          .end((err, response) => {
+            expect(response.status).to.equals(500);
+            done();
+          });
+      });
+
+      it('should resolve SparePartsController 1', (done) => {
+        sinon.replace(
+            SparePartsService,
+            'getSapareParts',
+          (): Promise<any> => {
+            return Promise.resolve(RESOLVE_RESPONSE);
+          }
+        );
+        chai
+          .request(app)
+          .get(apiPath + '/V1/motorcycles/get-spare-parts/1/1')
+          .end((err, response) => {
+            expect(response.status).to.equals(200);
+            done();
+          });
+      });
+
+      it('should reject SparePartsController 1', (done) => {
+        sinon.replace(
+            SparePartsService,
+            'getSapareParts',
+          (): Promise<any> => {
+            return Promise.reject(REJECT_RESPONSE);
+          }
+        );
+        chai
+          .request(app)
+          .get(apiPath + '/V1/motorcycles/get-spare-parts/1/1')
           .end((err, response) => {
             expect(response.status).to.equals(500);
             done();

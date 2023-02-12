@@ -1,11 +1,10 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
+import { ICategory } from '../../src/model/ICategory';
 import { IError } from '../../src/model/IError';
 import { IProducType } from '../../src/model/IProductType';
 import { ProductsService } from '../../src/services/ProductsService';
-import { ICategory } from '../../src/model/ICategory';
-
 
 
 
@@ -35,7 +34,6 @@ const REJECT_RESPONSE = {
        'StatusDesc': 'NOT_FOUND'
    }
 } as IError;
-
 
 describe('ProductsService', () => {
 
