@@ -8,23 +8,25 @@ const debug = debugLib('tc:MotorcycleAccessoriesService');
 
 export class MotorcycleAccessoriesService {
 
-    public static async getTypeOfAccesories(): Promise<ITypeOfAccesories[]> {
+    public static async getBrandsByCategory(category: number): Promise<any> {
       try {
-         const response =  await MotorcycleAccessoriesDataSource.getTypeOfAccesories();
+         const response =  await MotorcycleAccessoriesDataSource.getBrandsByCategory(category);
          return Promise.resolve(response);
       } catch (err) {
-         debug('Error trying to obtain acesories types %s ', err);
+         debug('Error trying to obtain brands for an category %s ', err);
          return Promise.reject(err);
       }
     }
 
-    public static async getBrandsOfSparePartsByType (accesory: number ): Promise<IAccesoryBrand[]> {
+    public static async getProductsByBrand(productCategory: number, brand: number): Promise<any> {
       try {
-         const response =  await MotorcycleAccessoriesDataSource.getBrandsOfSparePartsByType(accesory);
+         const response =  await MotorcycleAccessoriesDataSource.getProductsByBrand(productCategory, brand);
          return Promise.resolve(response);
       } catch (err) {
-         debug('Error trying to obtain acesories types %s ', err);
+         debug('Error trying to product by brand and category  %s ', err);
          return Promise.reject(err);
       }
     }
+
+
 }

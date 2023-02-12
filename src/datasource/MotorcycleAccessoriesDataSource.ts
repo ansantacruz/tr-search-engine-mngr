@@ -1,34 +1,35 @@
 import debugLib from 'debug';
 import { QueryTypes } from 'sequelize';
 import { executeSQL } from '../database/database';
-import { IAccesoryBrand } from '../model/IAccesoryBrand';
-import { ITypeOfAccesories } from '../model/ITypeOfAccesories';
 import { MessageError } from '../utilities/DebugUtilities';
+import { IProduct } from '../model/IProduct';
 
 const debug = debugLib('tc:MotorcycleAccessoriesDataSource');
 
 export default class MotorcycleAccessoriesDataSource {
 
 
-    public static readonly getTypeOfAccesories = async (): Promise<ITypeOfAccesories[]> => {
-        debug('Start the search for types of accessories');
+    public static readonly getBrandsByCategory = async (category: number): Promise<any> => {
+        debug('Start the search of brand for an category');
         try {
             const result = await executeSQL(
-                `SELECT
-                    ta.tac_id as accesorieId,
-                    ta.tac_descripcion as accesorieName,
-                    ta.tac_logo as logo
-                FROM tr_data_base.tipo_accesorio ta
-                where ta.tac_estado = 1;`,
+                `SELECT DISTINCTROW ma.mpr_descripcion as brand
+                FROM
+                    tr_data_base.producto_categoria pc
+                    INNER JOIN tr_data_base.producto p
+                    ON p.pro_id = pc.pca_producto
+                    INNER JOIN tr_data_base.marca_producto ma
+                    ON p.pro_marca = ma.mpr_id
+                where pc.pca_tipoCategoria =$category`,
                 QueryTypes.SELECT,
-                {}
+                {category}
             );
             if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');
                 const bodyGetTypeOfAccesoriesError = {
-                    CodeError: 'SELECT-SEARCH-TYPE-OF-ACCESORIES-404-DB',
+                    CodeError: 'SELECT-SEARCH-BRANDS-BY-CATEGORY-404-DB',
                     Reason: 'BD error TR_DATA_BASE',
                     StatusCode: '404',
                 };
@@ -37,41 +38,47 @@ export default class MotorcycleAccessoriesDataSource {
 
         } catch (err) {
             debug(`[%s] ${MessageError}`, err);
-            return Promise.reject({ Code: 'SELECT-SEARCH-TYPE-OF-ACCESORIES', Reason: err });
+            return Promise.reject({ Code: 'SELECT-SEARCH-BRANDS-BY-CATEGORY', Reason: err });
         }
     }
 
-    public static readonly getBrandsOfSparePartsByType = async (accesory: number ): Promise<IAccesoryBrand[]> => {
-        debug('Starts the search for brands selling a certain type of accessory ');
+    public static readonly getProductsByBrand = async (productCategory: number, brand: number): Promise<IProduct[]> => {
+        debug('Start the search of products for an category and brand');
         try {
             const result = await executeSQL(
                 `SELECT
-                    mp.mpr_descripcion as brandName,
-                    mp.mpr_id as brandId
-                FROM tr_data_base.marca_tipo_accesorio mta
-                INNER JOIN tr_data_base.marca_producto mp
-                     ON mp.mpr_id = mta.mtt_id_marca
-                INNER JOIN tr_data_base.tipo_accesorio ta
-                    ON ta.tac_id = mta.mtt_id_tipo_accesorio
-                WHERE mta.mtt_id_tipo_accesorio = $accesory;`,
+                    p.pro_id as productId,
+                    p.pro_descripcion as productDescription,
+                    pi.pi_imagen as logo
+                FROM
+                    tr_data_base.producto_categoria pc
+                    INNER JOIN tr_data_base.producto p
+                    ON p.pro_id = pc.pca_producto
+                    INNER JOIN tr_data_base.marca_producto ma
+                    ON p.pro_marca = ma.mpr_id
+                    INNER JOIN tr_data_base.producto_imagen pi
+                    ON p.pro_id = pi.pi_producto
+                WHERE pc.pca_tipoCategoria =$productCategory and ma.mpr_id =$brand;`,
                 QueryTypes.SELECT,
-                { accesory }
+                {productCategory, brand }
             );
             if (result.length > 0) {
                 return Promise.resolve(result);
             } else {
                 debug(`${MessageError}`, '404 TR_DATA_BASE');
-                const bodyBrandsOfSparePartsByTypeError = {
-                    CodeError: 'SELECT-ACCESORY-BRANDS-404-DB',
+                const bodyGetTypeOfAccesoriesError = {
+                    CodeError: 'SELECT-SEARCH-PRODUCTS-BY-BRAND-AND-CATEGORY-404-DB',
                     Reason: 'BD error TR_DATA_BASE',
                     StatusCode: '404',
                 };
-                return Promise.reject(bodyBrandsOfSparePartsByTypeError);
+                return Promise.reject(bodyGetTypeOfAccesoriesError);
             }
 
         } catch (err) {
             debug(`[%s] ${MessageError}`, err);
-            return Promise.reject({ Code: 'SELECT-SEARCH-ACCESORY-BRANDS', Reason: err });
+            return Promise.reject({ Code: 'SELECT-SEARCH-PRODUCTS-BY-BRAND-AND-CATEGORY', Reason: err });
         }
     }
+
+
 }
