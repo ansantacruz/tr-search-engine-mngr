@@ -27,5 +27,6 @@ export class ProductsService {
          return Promise.reject(err);
       }
    }
+   
 
 }
