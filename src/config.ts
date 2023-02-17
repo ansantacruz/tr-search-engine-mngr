@@ -1,8 +1,8 @@
 
 export default {
     apiPath: '',
-    databaseHost: 'tr-data-base.cl37ixkn2obi.us-east-1.rds.amazonaws.com',
-    databasePass: 'Pr0s3gu1r.2709',
+    databaseHost: '34.135.145.201',
+    databasePass: 'root',
     databasePort: '3306',
     databaseUser: 'root',
     databesePoolAcquiere: '30000',
