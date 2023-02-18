@@ -1,9 +1,15 @@
-FROM node:16-slim
-WORKDIR /usr/app/src
-COPY package*.json ./
+FROM node:boron
 
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package.json /usr/src/app/
 RUN npm install --force
 
-COPY src .
+# Bundle app source
+COPY . /usr/src/app
 
-CMD ["node", "app.ts"]
+EXPOSE 9036
+CMD [ "npm", "start" ]
