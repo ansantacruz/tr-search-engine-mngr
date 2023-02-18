@@ -20,6 +20,3 @@ export default {
     // PORT: process.env.PORT || '9087',
 
 };
-
-gcloud iam service-accounts keys create secret.json \
-       --iam-account turepuesto@appspot.gserviceaccount.com
