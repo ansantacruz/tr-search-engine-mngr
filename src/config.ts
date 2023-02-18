@@ -2,7 +2,7 @@
 export default {
     PORT: 9036,
     apiPath: '',
-    databaseHost: '34.135.145.201',
+    databaseHost: '34.134.59.167',
     databasePass: 'root',
     databasePort: '3306',
     databaseUser: 'root',
