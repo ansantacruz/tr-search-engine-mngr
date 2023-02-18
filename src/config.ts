@@ -1,5 +1,6 @@
 
 export default {
+    PORT: 9036,
     apiPath: '',
     databaseHost: '34.135.145.201',
     databasePass: 'root',
