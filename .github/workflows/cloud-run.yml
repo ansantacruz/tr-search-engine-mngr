@@ -21,7 +21,7 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-    PROJECT_ID: ${{ secrets.PROJECT_ID }}
+    PROJECT_ID: ${{ secrets.RUN_PROJECT }}
     RUN_REGION: us-central1
     SERVICE_NAME: stc-search-engine-mngr
 jobs:
@@ -60,12 +60,12 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{  github.sha }} .
-        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{  github.sha }}
+        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} .
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }}
     - name: Deploy to Cloud Run
       run: |-
         gcloud run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
-          --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{  github.sha }} \
+          --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} \
           --platform "managed" \
           --quiet
