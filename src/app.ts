@@ -24,6 +24,7 @@ app.use((_, res, next) => {
     next(); // NOSONAR
 });
 
+
 // add the controllers you need here
 app.use(
     actuator({
