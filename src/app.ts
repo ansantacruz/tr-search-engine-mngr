@@ -1,20 +1,18 @@
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import actuator = require('express-actuator');
-import logger from 'morgan';
 import path from 'path';
 import config from './config';
-import NotificationHousingController from './controllers/NotificationHousingController';
+import SparePartsController from './controllers/SparePartsController';
+import MotorcycleAccessoriesController from './controllers/MotorcycleAccessoriesController';
+import ProductsController from './controllers/ProductsController';
 
 const app = express();
 const apiPath = config.apiPath;
-const fullApiPath = `${apiPath}/V1/Utilities`;
+const fullApiPath = `${apiPath}/V1/`;
 
 app.disable('x-powered-by');
-app.use(logger('dev', { skip: (req) => req.path === '/management/health' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../static')));
 
 // Configurar cabeceras y cors
@@ -26,6 +24,7 @@ app.use((_, res, next) => {
     next(); // NOSONAR
 });
 
+
 // add the controllers you need here
 app.use(
     actuator({
@@ -33,6 +32,6 @@ app.use(
     })
 );
 
-app.use(fullApiPath, NotificationHousingController);
+app.use(fullApiPath, SparePartsController, MotorcycleAccessoriesController, ProductsController);
 
 export default app;
