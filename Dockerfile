@@ -6,4 +6,4 @@ RUN npm install --force
 
 COPY src .
 
-CMD ["node", "index.js"]
+CMD ["node", "app.js"]
