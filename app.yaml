@@ -1,0 +1,13 @@
+runtime: nodejs16
+env_variables:
+    apiPath: ''
+    databaseHost: '34.135.145.201'
+    databasePass: 'root'
+    databasePort: '3306'
+    databaseUser: 'root'
+    databesePoolAcquiere: '30000'
+    databesePoolIdle:  '10000'
+    databesePoolMax:  '7'
+    databesePoolMin: '0'
+    logSentenceSQL: true
+    BUCKET_NAME: "tr-search-engine-mngr"
