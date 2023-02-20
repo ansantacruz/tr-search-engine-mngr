@@ -23,7 +23,7 @@ on:
 env:
     PROJECT_ID: ${{ secrets.RUN_PROJECT }}
     RUN_REGION: us-central1
-    SERVICE_NAME: stc-search-engine-mngr
+    SERVICE_NAME: tc-search-engine-mngr
     PORT: 80
 jobs:
   deploy:
@@ -68,6 +68,6 @@ jobs:
         gcloud run deploy ${{ env.SERVICE_NAME }} \
           --region ${{ env.RUN_REGION }} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} \
-          --port ${{ env.PORT }} \
+          --port ${{env.PORT }} \
           --platform "managed" \
           --quiet
