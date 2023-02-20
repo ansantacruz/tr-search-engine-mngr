@@ -24,6 +24,7 @@ env:
     PROJECT_ID: ${{ secrets.RUN_PROJECT }}
     RUN_REGION: us-central1
     SERVICE_NAME: stc-search-engine-mngr
+    PORT: 80
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -60,12 +61,13 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} .
+        docker buildx build --platform linux/amd64,linux/arm64  -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} .
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }}
     - name: Deploy to Cloud Run
       run: |-
         gcloud run deploy ${{ env.SERVICE_NAME }} \
           --region ${{ env.RUN_REGION }} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} \
+          --port ${{ env.PORT }} \
           --platform "managed" \
           --quiet
