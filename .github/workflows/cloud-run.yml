@@ -24,7 +24,7 @@ env:
     PROJECT_ID: ${{ secrets.RUN_PROJECT }}
     RUN_REGION: us-central1
     SERVICE_NAME: tc-search-engine-mngr
-    PORT: 9036
+    PORT: 8080
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -61,13 +61,18 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} -f Dockerfile
+        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} -f Dockerfile .
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }}
     - name: Deploy to Cloud Run
       run: |-
         gcloud run deploy ${{ env.SERVICE_NAME }} \
-          --region ${{ env.RUN_REGION }} \
+          --project ${{env.PROJECT_ID}} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}/${{  github.sha }} \
+          --region us-central1 \
           --port ${{env.PORT }} \
           --platform "managed" \
-          --quiet
+          --memory 256Mi \
+          --concurrency 80 \
+          --timeout 300 \
+          --service-account 878402794954-compute@developer.gserviceaccount.com \
+          --clear-env-vars
