@@ -4,9 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install --force
-COPY node_modules /app/node_modules/
-COPY build ./build/
-COPY static ./static/
+
 COPY tsconfig.json ./
 
 CMD chmod 755  npm run deploy
