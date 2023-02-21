@@ -1,9 +1,9 @@
 FROM node:12-alpine3.12
 RUN npm install --force
-RUN npm run build
 
 WORKDIR /app
 COPY package*.json ./
+RUN npm run build
 # COPY node_modules /app/node_modules/
 COPY build ./build/
 COPY static ./static/
