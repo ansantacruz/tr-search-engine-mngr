@@ -6,5 +6,6 @@ COPY package*.json ./
 RUN npm install --force
 
 COPY tsconfig.json ./
+COPY . ./
 
-CMD chmod 755  npm run deploy
+CMD ["node", "./build/app.js"]
