@@ -8,4 +8,4 @@ COPY tsconfig.json ./
 COPY . ./
 
 
-CMD ["node", "./build/bin/www.js"]
+CMD ["sh", "./entrypoint.sh"]
