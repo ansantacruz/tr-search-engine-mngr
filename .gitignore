@@ -91,8 +91,6 @@ typings/
 # npm
 #package-lock.json
 
-# Typecript TSC
-build
 
 # sonar scanner
 .scannerwork/
