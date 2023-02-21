@@ -24,7 +24,7 @@ env:
     PROJECT_ID: ${{ secrets.RUN_PROJECT }}
     RUN_REGION: us-central1
     SERVICE_NAME: tc-search-engine-mngr
-    PORT: 80
+    PORT: 9036
 jobs:
   deploy:
     runs-on: ubuntu-latest
