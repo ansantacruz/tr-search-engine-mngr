@@ -99,6 +99,3 @@ build
 
 # Editor config
 .editorconfig
-
-
-node_modules

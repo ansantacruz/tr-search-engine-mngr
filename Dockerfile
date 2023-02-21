@@ -6,7 +6,6 @@ COPY package*.json ./
 COPY node_modules /app/node_modules/
 COPY build ./build/
 COPY static ./static/
-COPY docker/entrypoint.sh ./
 COPY tsconfig.json ./
 
 CMD chmod 755  npm run deploy
