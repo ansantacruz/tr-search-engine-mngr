@@ -3,7 +3,7 @@ RUN npm install --force
 
 WORKDIR /app
 COPY package*.json ./
-COPY node_modules /app/node_modules/
+# COPY node_modules /app/node_modules/
 COPY build ./build/
 COPY static ./static/
 COPY tsconfig.json ./
