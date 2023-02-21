@@ -59,6 +59,13 @@ jobs:
     - name: Authorize Docker push
       run: gcloud auth configure-docker
 
+      # Install Skaffold
+    - name: Install Skaffold
+      run: |
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+        sudo install skaffold /usr/local/bin/
+        skaffold version
+
     - name: Build and Push Container
       run: |-
         skaffold init --artifact {"image":"gcr.io/turepuesto/tr-search-engine-mngr","builder":"Docker","payload":{"path":"Dockerfile"}} --skip-deploy --filename /var/folders/lq/4332d5lx775_tpqhf_c7h6k40000gq/T/cloud-code-cloud-run-v8c2xi/skaffold.yaml --force
