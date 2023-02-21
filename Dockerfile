@@ -1,10 +1,11 @@
 FROM node:12-alpine3.12
-RUN npm install --force
 
 WORKDIR /app
 COPY package*.json ./
+
+RUN npm install --force
 RUN npm run build
-# COPY node_modules /app/node_modules/
+COPY node_modules /app/node_modules/
 COPY build ./build/
 COPY static ./static/
 COPY tsconfig.json ./
