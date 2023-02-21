@@ -68,7 +68,7 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        skaffold init --artifact {"builder":"Docker","payload":{"path":"Dockerfile"},"image":"gcr.io/turepuesto/tr-search-engine-mngr"} --skip-deploy --filename /var/folders/lq/4332d5lx775_tpqhf_c7h6k40000gq/T/cloud-code-cloud-run-v8c2xi/skaffold.yaml --force
+        skaffold init --artifact {"builder":"Docker", "payload":{"path":"Dockerfile"}, "image":"gcr.io/turepuesto/tr-search-engine-mngr"} --skip-deploy --filename /var/folders/lq/4332d5lx775_tpqhf_c7h6k40000gq/T/cloud-code-cloud-run-v8c2xi/skaffold.yaml --force
         skaffold build --filename /var/folders/lq/4332d5lx775_tpqhf_c7h6k40000gq/T/cloud-code-cloud-run-v8c2xi/skaffold.yaml --kube-context='' --platform=linux/amd64
     - name: Deploy to Cloud Run
       run: |-
