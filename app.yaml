@@ -1,7 +1,9 @@
-runtime: nodejs16
+runtime: nodejs12
+service: tc-search-engine-mngr
 env_variables:
+    PORT: 9036
     apiPath: ''
-    databaseHost: '34.135.145.201'
+    databaseHost: '34.134.59.167'
     databasePass: 'root'
     databasePort: '3306'
     databaseUser: 'root'
@@ -10,4 +12,3 @@ env_variables:
     databesePoolMax:  '7'
     databesePoolMin: '0'
     logSentenceSQL: true
-    BUCKET_NAME: "tr-search-engine-mngr"
