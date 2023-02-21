@@ -1,12 +1,12 @@
-FROM node:16-slim
-WORKDIR /usr/app/src
-COPY package*.json ./
-
+FROM node:12-alpine3.12
 RUN npm install --force
 
-COPY src .
+WORKDIR /app
+COPY package*.json ./
+COPY node_modules /app/node_modules/
+COPY build ./build/
+COPY static ./static/
+COPY docker/entrypoint.sh ./
+COPY tsconfig.json ./
 
-# EXPOSE 9036
-ENV HOST 0.0.0.0
-
-CMD npm start
+CMD chmod 755  npm run deploy
