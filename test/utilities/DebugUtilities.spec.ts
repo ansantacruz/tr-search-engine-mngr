@@ -2,7 +2,7 @@ import chai, { assert } from 'chai';
 import chaiHttp from 'chai-http';
 import { DebugUtilities } from '../../src/utilities/DebugUtilities';
 import sinon from 'sinon';
-import { v4 as uuid } from 'uuid';
+
 
 chai.use(chaiHttp);
 chai.should();
@@ -27,14 +27,14 @@ describe('DebugUtilities', () => {
 
     it('should return defined error', () => {
         const error = DebugUtilities.error(
-            { Reason: 'test error', Code: 'ERR-TEST', StatusCode: 400 }, 'Error', uuid());
+            { Reason: 'test error', Code: 'ERR-TEST', StatusCode: 400 }, 'Error', "uuid()");
         assert.isDefined(error);
         assert.isNumber(error.codeStatusError);
         expect(error.statusError.Status.StatusCode).equal(error.codeStatusError);
     });
 
     it('should return general error', () => {
-        const error = DebugUtilities.error( {}, 'Error', uuid());
+        const error = DebugUtilities.error( {}, 'Error', "uuid()");
         assert.isDefined(error);
         assert.isNumber(error.codeStatusError);
         expect(error.statusError.Status.StatusCode).equal(error.codeStatusError);
