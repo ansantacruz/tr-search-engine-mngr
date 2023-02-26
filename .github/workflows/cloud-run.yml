@@ -21,38 +21,65 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-    PROJECT_ID: ${{ secrets.PROJECT_ID }}
+    PROJECT_ID: ${{ secrets.RUN_PROJECT }}
     RUN_REGION: us-central1
-    SERVICE_NAME: stc-search-engine-mngr
-
+    SERVICE_NAME: tc-search-engine-mngr
+    PORT: 8080
 jobs:
-    setup-build-deploy:
-        name: Setup, Build, and Deploy
-        runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v1
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
 
-            # Setup gcloud CLI
-            - uses: google-github-actions/setup-gcloud@v0
-              with:
-                  version: '275.0.0'
-                  service_account_email: ${{ secrets.SA_EMAIL }}
-                  service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
 
-            # Configure gcloud CLI
-            - name: gcloud Set up
-              run: |
-                  gcloud config set project $PROJECT_ID
-            # Build and push image to Google Container Registry
-            - name: Build
-              run: |
-                  gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-            # Deploy image to Cloud Run
-            - name: Deploy
-              run: |
-                  gcloud run deploy $SERVICE_NAME \
-                    --region $RUN_REGION \
-                    --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
-                    --platform managed
+    # Configure Workload Identity Federation and generate an access token.
+    # - id: 'auth'
+    #   name: 'Authenticate to Google Cloud'
+    #   uses: 'google-github-actions/auth@v1'
+    #   with:
+    #     workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+    #     service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+
+    # Alternative option - authentication via credentials json
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+
+    # Setup gcloud CLI
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Authorize Docker push
+      run: gcloud auth configure-docker
+
+      # Install Skaffold
+    - name: Install Skaffold
+      run: |
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+        sudo install skaffold /usr/local/bin/
+        skaffold version
+
+    - name: Build and Push Container
+      run: |-
+        skaffold init --artifact '{"builder":"Docker", "payload":{"path":"Dockerfile"}, "image":"gcr.io/turepuesto/tr-search-engine-mngr"}' --skip-deploy --filename ./skaffold.yaml  --force
+        skaffold build --filename ./skaffold.yaml --kube-context='' --platform=linux/amd64
+    - name: Deploy to Cloud Run
+      run: |-
+        gcloud run deploy ${{ env.SERVICE_NAME }} \
+          --project ${{env.PROJECT_ID}} \
+          --image gcr.io/turepuesto/tr-search-engine-mngr \
+          --region us-central1 \
+          --port ${{env.PORT }} \
+          --platform "managed" \
+          --memory 256Mi \
+          --concurrency 80 \
+          --timeout 300 \
+          --service-account 878402794954-compute@developer.gserviceaccount.com \
+          --clear-env-vars

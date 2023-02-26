@@ -1,5 +1,6 @@
-
-export default {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
     PORT: 9036,
     apiPath: '',
     databaseHost: '34.134.59.167',
@@ -7,8 +8,8 @@ export default {
     databasePort: '3306',
     databaseUser: 'root',
     databesePoolAcquiere: '30000',
-    databesePoolIdle:  '10000',
-    databesePoolMax:  '7',
+    databesePoolIdle: '10000',
+    databesePoolMax: '7',
     databesePoolMin: '0',
     logSentenceSQL: true,
     // activeEvent: process.env.ACTIVE_EVENT || '',
@@ -19,5 +20,5 @@ export default {
     // environment: process.env.NODE_ENV || 'qa',
     // fetchTimeout: process.env.FETCH_TIMEOUT || 29000,
     // PORT: process.env.PORT || '9087',
-
 };
+//# sourceMappingURL=config.js.map

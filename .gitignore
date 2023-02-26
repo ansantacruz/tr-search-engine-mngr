@@ -91,14 +91,9 @@ typings/
 # npm
 #package-lock.json
 
-# Typecript TSC
-build
 
 # sonar scanner
 .scannerwork/
 
 # Editor config
 .editorconfig
-
-
-node_modules
