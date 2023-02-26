@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 chai.should();
 const apiPath = config.apiPath;
 const expect = chai.expect;
-
+ 
 const RESOLVE_RESPONSE_BRANDS = [
   {
     "brand": "ICON"
