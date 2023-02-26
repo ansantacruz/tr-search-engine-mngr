@@ -5,7 +5,6 @@ import { MessageError } from '../utilities/DebugUtilities';
 import { IProduct } from '../model/IProduct';
 
 const debug = debugLib('tc:MotorcycleAccessoriesDataSource');
-
 export default class MotorcycleAccessoriesDataSource {
 
 
@@ -22,7 +21,7 @@ export default class MotorcycleAccessoriesDataSource {
                     ON p.pro_marca = ma.mpr_id
                 where pc.pca_tipoCategoria =$category`,
                 QueryTypes.SELECT,
-                {category}
+                { category }
             );
             if (result.length > 0) {
                 return Promise.resolve(result);
